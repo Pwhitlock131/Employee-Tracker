@@ -48,14 +48,14 @@ const addDepartment = () => inquirer.prompt({
     name: "deptName"
 }).then(answer => {
     db.promise().execute("INSERT INTO department (name) VALUES (?)", [answer.deptName])
-    .then(([rows, fields]) => {
-        console.table(rows);
-        startScreen();
-    })
-    .catch(err => {
-        console.error(err);
-        startScreen();
-    });
+        .then(([rows, fields]) => {
+            console.table(rows);
+            startScreen();
+        })
+        .catch(err => {
+            console.error(err);
+            startScreen();
+        });
 });
 
 const addRole = () => inquirer.prompt([
@@ -64,7 +64,53 @@ const addRole = () => inquirer.prompt([
     { type: "input", message: "What is the department id number?", name: "deptID" }
 ]).then(answer => {
     db.promise().execute("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
-    [answer.roleName, answer.salaryTotal, answer.deptID])
+        [answer.roleName, answer.salaryTotal, answer.deptID])
+        .then(([rows, fields]) => {
+            console.table(rows);
+            startScreen();
+        })
+        .catch(err => {
+            console.error(err);
+            startScreen();
+        });
+});
+
+const addEmployee = () => inquirer.prompt([
+    { type: "input", message: "What is the first name of this employee?", name: "firstName" },
+    { type: "input", message: "What is the last name of this employee?", name: "lastName" },
+    { type: "input", message: "What is this employees role ID number?", name: "roleID" },
+    { type: "input", message: "What is their manager ID number?", name: "managerID" }
+]).then(answer => {
+    db.promise().execute("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        [answer.firstName, answer.lastName, answer.roleID, answer.managerID])
+        .then(([rows, fields]) => {
+            console.table(rows);
+            startScreen();
+        })
+        .catch(err => {
+            console.error(err);
+            startScreen();
+        });
+});
+
+const updateEmployee = () => inquirer.prompt([
+    { type: "input", message: "Which employee would you like to update?", name: "updateEmployee" },
+    { type: "input", message: "What is your desired update?", name: "updateRole" }
+]).then(answer => {
+    console.log("Updating employee:", answer.updateEmployee, "to role:", answer.updateRole);
+
+    db.promise().execute('UPDATE employee SET role_id=? WHERE first_name=?', [answer.updateRole, answer.updateEmployee])
+        .then(([rows, fields]) => {
+            console.table(rows);
+            startScreen();
+        })
+        .catch(err => {
+            console.error(err);
+            startScreen();
+        });
+});
+
+const viewDepartments = () => db.promise().execute("SELECT * FROM department")
     .then(([rows, fields]) => {
         console.table(rows);
         startScreen();
@@ -73,4 +119,29 @@ const addRole = () => inquirer.prompt([
         console.error(err);
         startScreen();
     });
-});
+
+const viewRoles = () => db.promise().execute("SELECT * FROM role")
+    .then(([rows, fields]) => {
+        console.table(rows);
+        startScreen();
+    })
+    .catch(err => {
+        console.error(err);
+        startScreen();
+    });
+
+
+const viewEmployees = () => db.promise().execute("SELECT * FROM employee")
+    .then(([rows, fields]) => {
+        console.table(rows);
+        startScreen();
+    })
+    .catch(err => {
+        console.error(err);
+        startScreen();
+    });
+
+const quit = () => {
+    db.end();
+    process.exit();
+};

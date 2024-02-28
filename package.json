@@ -2,14 +2,15 @@
     "name": "employee-tracker",
     "version": "1.0.0",
     "description": "Homework 12",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js"
+        "start": "node index"
     },
     "author": "Preston Whitlock",
     "license": "MIT",
     "dependencies": {
+        "asciiart-logo": "^0.2.6",
         "inquirer": "^8.2.4",
         "mysql2": "^3.6.5"
     }

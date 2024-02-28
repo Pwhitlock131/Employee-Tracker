@@ -9,7 +9,9 @@ This application will allow users to view all departments, roles, and employees,
 3. Follow the prompts based on what wish to change or see.
 
 # Links
+https://drive.google.com/file/d/1_oLfPkLofvFzGYZt59wdIESxRCv2roSi/view
 
+https://github.com/Pwhitlock131/Employee-Tracker
 
 # Credits 
 Instructor - Tyler Calvert
